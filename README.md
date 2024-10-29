@@ -1,15 +1,3 @@
-# secure-Kubernetes-architecture
-
-flowchart TD
-    subgraph "CI/CD Pipeline"
-        A[Developer Push] --> B[Source Code Repository]
-        B --> C[Code Security Scan]
-        C --> D[Build Container Image]
-        D --> E[Image Security Scan]
-        E --> F[Sign Image]
-        F --> G[Push to Registry]
-        G -# Secure Kubernetes Architecture
-
 ## Kubernetes Security Architecture
 
 ```mermaid
