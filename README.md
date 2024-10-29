@@ -94,45 +94,38 @@ flowchart LR
     linkStyle default stroke:#000000,stroke-width:2px
 ```
 
-## Key Security Components
 
-### Kubernetes Security Layers
+# Secure Kubernetes Architecture and CI/CD Pipeline
 
-🔒 **Control Plane Security**
-- API Server Authentication & Authorization
-- Encrypted etcd Storage
-- Secure Controller Operations
-- Protected Scheduler
+## Overview
 
-🔒 **Workload Security**
-- Pod Security Standards
-- Container Hardening
-- Resource Isolation
-- Network Segmentation
+This project focuses on designing a secure Kubernetes cluster and a CI/CD pipeline for deploying applications. It includes essential security measures throughout the architecture and deployment process.
 
-🔒 **Access Control**
-- RBAC Policies
-- Service Accounts
-- Namespace Isolation
-- Secret Management
+## Components
 
-### CI/CD Security Controls
+### 1. Kubernetes Cluster Design
+- **RBAC:** Implement Role-Based Access Control to manage user permissions.
+- **Isolated Environments:** Use namespaces for different environments (e.g., dev, test, prod).
+- **Pod Communication:** Limit pod-to-pod communication using Network Policies.
+- **API Security:** Secure API access with HTTPS and authentication.
 
-🔒 **Code Security**
-- Source Analysis
-- Dependency Scanning
-- Secret Detection
-- Compliance Checks
+### 2. CI/CD Pipeline
+- **Source Code Scanning:** Scan code for vulnerabilities before building.
+- **Build & Push:** Build container images and push them to a secure registry.
+- **Image Scanning:** Scan images for vulnerabilities before deployment.
+- **Secure Deployment:** Deploy applications securely to the Kubernetes cluster.
 
-🔒 **Build Security**
-- Container Scanning
-- Image Signing
-- Base Image Security
-- Registry Protection
+## Getting Started
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd <repository-directory>
+   ```
 
-🔒 **Deployment Security**
-- Configuration Validation
-- Security Policy Enforcement
-- Health Monitoring
-- Access Controls
+2. Set up your Kubernetes cluster following the [Kubernetes documentation](https://kubernetes.io/docs/setup/).
 
+3. Configure and run your CI/CD pipeline using your preferred CI tool.
+
+## Conclusion
+
+This project establishes a secure foundation for Kubernetes applications and ensures that security is integrated into the CI/CD process.
