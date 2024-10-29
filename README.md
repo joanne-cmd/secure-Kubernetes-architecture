@@ -1,33 +1,37 @@
+# Secure Kubernetes Architecture
+
 ## Kubernetes Security Architecture
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '16px', 'fontFamily': 'arial', 'lineWidth': '2px' }}}%%
 flowchart TD
-    classDef default fill:#ffffff,stroke:#000000,color:#000000
-    classDef highlight fill:#f0f0f0,stroke:#000000,color:#000000
+    classDef default fill:#ffffff,stroke:#000000,stroke-width:2px,color:#000000,font-size:14px
+    classDef highlight fill:#f0f0f0,stroke:#000000,stroke-width:2px,color:#000000,font-size:14px
+    classDef cluster fill:#ffffff,stroke:#000000,stroke-width:4px,color:#000000,font-size:16px
 
-    subgraph K8S["Kubernetes Cluster"]
+    subgraph K8S["KUBERNETES CLUSTER"]
         direction TB
         
-        subgraph CP["Control Plane"]
+        subgraph CP["CONTROL PLANE COMPONENTS"]
             direction LR
-            API["API Server"]:::highlight
-            ETCD["Encrypted etcd"]
-            CM["Controller Manager"]
-            SCHED["Scheduler"]
+            API["API SERVER<br/>Security Gateway"]:::highlight
+            ETCD["ENCRYPTED ETCD<br/>Secure Storage"]:::highlight
+            CM["CONTROLLER<br/>MANAGER"]:::default
+            SCHED["SCHEDULER"]:::default
         end
 
-        subgraph SEC["Security Layer"]
+        subgraph SEC["SECURITY CONTROLS"]
             direction LR
-            RBAC["RBAC"]:::highlight
-            PSP["Pod Security"]
-            NP["Network Policies"]:::highlight
+            RBAC["RBAC POLICIES<br/>Access Control"]:::highlight
+            PSP["POD SECURITY<br/>Standards"]:::highlight
+            NP["NETWORK<br/>POLICIES"]:::highlight
         end
 
-        subgraph WL["Workload Layer"]
+        subgraph WL["WORKLOAD LAYER"]
             direction LR
-            NS["Namespaces"]
-            PODS["Secure Pods"]
-            SVC["Services"]
+            NS["SECURE<br/>NAMESPACES"]:::highlight
+            PODS["HARDENED<br/>PODS"]:::highlight
+            SVC["SECURE<br/>SERVICES"]:::highlight
         end
 
         API --> RBAC
@@ -38,116 +42,97 @@ flowchart TD
         PODS --> SVC
     end
 
-    style K8S fill:#ffffff,stroke:#000000,color:#000000
-    style CP fill:#ffffff,stroke:#000000,color:#000000
-    style SEC fill:#ffffff,stroke:#000000,color:#000000
-    style WL fill:#ffffff,stroke:#000000,color:#000000
+    style K8S fill:#ffffff,stroke:#000000,stroke-width:4px,color:#000000,font-size:18px
+    style CP fill:#ffffff,stroke:#000000,stroke-width:3px,color:#000000,font-size:16px
+    style SEC fill:#ffffff,stroke:#000000,stroke-width:3px,color:#000000,font-size:16px
+    style WL fill:#ffffff,stroke:#000000,stroke-width:3px,color:#000000,font-size:16px
+
+    linkStyle default stroke:#000000,stroke-width:2px
 ```
 
 ## Secure CI/CD Pipeline
 
 ```mermaid
+%%{init: {'theme': 'base', 'themeVariables': { 'fontSize': '16px', 'fontFamily': 'arial', 'lineWidth': '2px' }}}%%
 flowchart LR
-    classDef default fill:#ffffff,stroke:#000000,color:#000000
-    classDef highlight fill:#f0f0f0,stroke:#000000,color:#000000
+    classDef default fill:#ffffff,stroke:#000000,stroke-width:2px,color:#000000,font-size:14px
+    classDef highlight fill:#f0f0f0,stroke:#000000,stroke-width:2px,color:#000000,font-size:14px
+    classDef cluster fill:#ffffff,stroke:#000000,stroke-width:4px,color:#000000,font-size:16px
 
-    subgraph CI["Continuous Integration"]
+    subgraph CI["CONTINUOUS INTEGRATION"]
         direction LR
-        A["Code Push"]:::default
-        B["Code Scan"]:::highlight
-        C["Unit Tests"]:::default
-        D["Build Image"]:::default
+        A["CODE<br/>PUSH"]:::default
+        B["SECURITY<br/>SCAN"]:::highlight
+        C["UNIT<br/>TESTS"]:::default
+        D["BUILD<br/>IMAGE"]:::default
     end
 
-    subgraph SEC["Security Gates"]
+    subgraph SEC["SECURITY GATES"]
         direction LR
-        E["SAST Scan"]:::highlight
-        F["Dependency Scan"]:::highlight
-        G["Image Scan"]:::highlight
-        H["Sign Image"]:::highlight
+        E["STATIC<br/>ANALYSIS"]:::highlight
+        F["DEPENDENCY<br/>SCAN"]:::highlight
+        G["CONTAINER<br/>SCAN"]:::highlight
+        H["IMAGE<br/>SIGNING"]:::highlight
     end
 
-    subgraph CD["Continuous Deployment"]
+    subgraph CD["CONTINUOUS DEPLOYMENT"]
         direction LR
-        I["Image Registry"]:::default
-        J["K8s Validation"]:::highlight
-        K["Deploy"]:::default
-        L["Health Check"]:::default
+        I["SECURE<br/>REGISTRY"]:::highlight
+        J["K8s CONFIG<br/>VALIDATION"]:::highlight
+        K["SECURE<br/>DEPLOY"]:::highlight
+        L["HEALTH<br/>CHECK"]:::default
     end
 
     A --> B --> C --> D
     D --> E --> F --> G --> H
     H --> I --> J --> K --> L
 
-    style CI fill:#ffffff,stroke:#000000,color:#000000
-    style SEC fill:#ffffff,stroke:#000000,color:#000000
-    style CD fill:#ffffff,stroke:#000000,color:#000000
+    style CI fill:#ffffff,stroke:#000000,stroke-width:4px,color:#000000,font-size:18px
+    style SEC fill:#ffffff,stroke:#000000,stroke-width:4px,color:#000000,font-size:18px
+    style CD fill:#ffffff,stroke:#000000,stroke-width:4px,color:#000000,font-size:18px
+
+    linkStyle default stroke:#000000,stroke-width:2px
 ```
 
-## Security Components Details
+## Key Security Components
 
-### Kubernetes Security Controls
-1. **API Server Security**
-   - TLS encryption
-   - Authentication
-   - Authorization (RBAC)
-   - Admission Controllers
+### Kubernetes Security Layers
 
-2. **Workload Security**
-   - Pod Security Standards
-   - Container Security Context
-   - Resource Limits
-   - Network Policies
+🔒 **Control Plane Security**
+- API Server Authentication & Authorization
+- Encrypted etcd Storage
+- Secure Controller Operations
+- Protected Scheduler
 
-3. **Data Security**
-   - Encrypted etcd
-   - Encrypted Secrets
-   - PV/PVC Encryption
-   - Secure Communication
+🔒 **Workload Security**
+- Pod Security Standards
+- Container Hardening
+- Resource Isolation
+- Network Segmentation
+
+🔒 **Access Control**
+- RBAC Policies
+- Service Accounts
+- Namespace Isolation
+- Secret Management
 
 ### CI/CD Security Controls
-1. **Code Security**
-   - Source Code Scanning
-   - Secret Detection
-   - Dependency Scanning
-   - SAST Analysis
 
-2. **Container Security**
-   - Base Image Scanning
-   - Vulnerability Scanning
-   - Image Signing
-   - Registry Security
+🔒 **Code Security**
+- Source Analysis
+- Dependency Scanning
+- Secret Detection
+- Compliance Checks
 
-3. **Deployment Security**
-   - Manifest Validation
-   - RBAC Enforcement
-   - Network Policy Validation
-   - Health Checks
+🔒 **Build Security**
+- Container Scanning
+- Image Signing
+- Base Image Security
+- Registry Protection
 
-## Implementation Notes
+🔒 **Deployment Security**
+- Configuration Validation
+- Security Policy Enforcement
+- Health Monitoring
+- Access Controls
 
-The architecture implements security at multiple layers:
-
-1. **Development Security**
-   - Code scanning
-   - Dependency checking
-   - Secret detection
-   - Secure coding practices
-
-2. **Build Security**
-   - Secure base images
-   - Multi-stage builds
-   - Minimal container content
-   - No root processes
-
-3. **Runtime Security**
-   - Pod security standards
-   - Network isolation
-   - Resource constraints
-   - Health monitoring
-
-4. **Infrastructure Security**
-   - Control plane hardening
-   - Node security
-   - Network security
-   - Monitoring and logging
