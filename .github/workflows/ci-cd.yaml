@@ -16,6 +16,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
+      - name: List directory contents
+        run: ls -la /github/workspace 
       
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
@@ -77,3 +80,4 @@ jobs:
           sed -i "s|\${DOCKER_REGISTRY}|${{ env.REGISTRY }}|g" kubernetes/deployment.yaml
           sed -i "s|\${IMAGE_TAG}|${{ github.sha }}|g" kubernetes/deployment.yaml
           kubectl apply -f kubernetes/
+
