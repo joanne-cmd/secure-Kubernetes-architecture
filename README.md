@@ -105,7 +105,7 @@ This project focuses on designing a secure Kubernetes cluster and a CI/CD pipeli
 
 ### 1. Kubernetes Cluster Design
 - **RBAC:** Implement Role-Based Access Control to manage user permissions.
-- **Isolated Environments:** Use namespaces for different environments (e.g., dev, test, prod).
+- **Isolated Environments:** Use namespaces for different environments.
 - **Pod Communication:** Limit pod-to-pod communication using Network Policies.
 - **API Security:** Secure API access with HTTPS and authentication.
 
@@ -122,7 +122,7 @@ This project focuses on designing a secure Kubernetes cluster and a CI/CD pipeli
    cd <repository-directory>
    ```
 
-2. Set up your Kubernetes cluster following the [Kubernetes documentation](https://kubernetes.io/docs/setup/).
+2. Set up your Kubernetes cluster .
 
 3. Configure and run your CI/CD pipeline using your preferred CI tool.
 
