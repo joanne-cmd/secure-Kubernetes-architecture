@@ -88,11 +88,12 @@ jobs:
           severity: 'CRITICAL,HIGH'
         continue-on-error: true
 
+  
+  
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
-  
     
     steps:
       - name: Checkout code
@@ -101,21 +102,22 @@ jobs:
       - name: Set up Kind
         uses: helm/kind-action@v1
         with:
-            version: v0.21.0  # Specify the Kind version
+          version: v0.21.0
 
       - name: Create Kind cluster
         run: kind create cluster --name kind
-  
+
       - name: Load Docker image into Kind
         run: |
-              kind load docker-image ${{ env.REGISTRY }}/${{ github.repository }}:${{ github.sha }} --name kind
-  
+          for i in {1..3}; do
+            kind load docker-image ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} --name kind && break || sleep 10;
+          done
+
       - name: Apply Kubernetes manifests
         run: |
-              sed -i "s|\${DOCKER_REGISTRY}|${{ env.REGISTRY }}|g" kubernetes/deployment.yaml
-              sed -i "s|\${IMAGE_TAG}|${{ github.sha }}|g" kubernetes/deployment.yaml
-              kubectl apply -f kubernetes/
-  
+          sed -i "s|\${DOCKER_REGISTRY}|${{ env.REGISTRY }}|g" kubernetes/deployment.yaml
+          sed -i "s|\${IMAGE_TAG}|${{ github.sha }}|g" kubernetes/deployment.yaml
+          kubectl apply -f kubernetes/
 
  
       
