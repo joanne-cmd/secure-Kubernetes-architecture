@@ -68,11 +68,12 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
-          context: .
-          push: true
-          tags: |
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+            context: .
+            push: true
+            tags: |
+              ${{ env.REGISTRY }}/joanne-cmd/secure-kubernetes-architecture:${{ github.sha }}
+              ${{ env.REGISTRY }}/joanne-cmd/secure-kubernetes-architecture:latest
+  
             
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
