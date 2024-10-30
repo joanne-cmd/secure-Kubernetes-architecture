@@ -68,10 +68,10 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v4
         with:
-            context: ./docker  # change to the folder where Dockerfile is located
-            file: ./docker/Dockerfile  # specify the Dockerfile path
-            push: true
-            tags: |
+             context: .                    # Set the context to the root directory
+             file: Dockerfile              # Specify the Dockerfile in the root
+             push: true
+             tags: |
               ${{ env.REGISTRY }}/joanne-cmd/secure-kubernetes-architecture:${{ github.sha }}
               ${{ env.REGISTRY }}/joanne-cmd/secure-kubernetes-architecture:latest
         
